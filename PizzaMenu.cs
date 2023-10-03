@@ -1,4 +1,6 @@
-﻿namespace PizzaStore
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace PizzaStore
 {
     class PizzaMenu
     {
@@ -40,13 +42,12 @@
             Console.WriteLine();
         }
         public void AddMenuItem()
-
         {
             Console.WriteLine("Type a list number for the new pizza:\nBe aware that any existing items with that list number will be overwritten");
             if (int.TryParse(Console.ReadLine(), out int entryNum))
             {
                 Console.WriteLine("Type name for the new pizza:");
-                string entryName = Console.ReadLine() ?? ""; // null-coalescing operator, if !null, then left side gets returned, otherwise reverse, in this case, an empty string
+                string entryName = Console.ReadLine() ?? string.Empty; // null-coalescing operator, if !null, then left side gets returned, otherwise reverse, in this case, an empty string
                 Console.WriteLine("Type price for the new pizza:");
                 if (double.TryParse(Console.ReadLine(), out double entryPrice) && entryPrice >= 0)
                 {
@@ -100,17 +101,27 @@
         {
             Console.WriteLine("Enter search query: ");
             string userInput = Console.ReadLine() ?? string.Empty;
-
-            foreach (Pizza item in _menuList)
+            if (string.IsNullOrEmpty(userInput))
             {
-                string tempString1 = item.Number.ToString();
-                string tempstring2 = item.Name;
-                string tempString3 = item.Price.ToString();
-                if (userInput == tempString1 || userInput == tempstring2 || userInput == tempString3)
+                Console.WriteLine("Invalid user input, try again");
+            }
+            else
+            {
+                userInput.ToLower();
+                foreach (Pizza item in _menuList)
                 {
-                    Console.WriteLine($" #{item.Number}, Name: {item.Name}, Price: {item.Price}");
+                    string tempString1 = item.Number.ToString();
+                    string tempstring2 = item.Name.ToLower();
+                    string tempString3 = item.Price.ToString();
+                    if (userInput == tempString1 || userInput == tempstring2 || userInput == tempString3)
+                    {
+                        Console.WriteLine($"#{item.Number}, Name: {item.Name}, Price: {item.Price}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{userInput} has not been found in the menu");
+                    }
                 }
-                
             }
         }
         #endregion
