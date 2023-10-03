@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-namespace PizzaStore
+﻿namespace PizzaStore
 {
     class PizzaOrder
     {
