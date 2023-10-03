@@ -160,7 +160,7 @@
                 for (int i = 0; i < _menuList.Count; i++)
                 {
                     Pizza item = _menuList[i];
-                    if (searchQuery == item.Name)
+                    if (searchQuery.ToLower() == item.Name.ToLower())
                     {
                         Console.WriteLine($"Pizza #{i + 1} is {searchQuery} and costs {item.Price} kr\n");
                         queryFound = !queryFound;
