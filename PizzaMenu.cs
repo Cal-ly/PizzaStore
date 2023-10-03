@@ -98,83 +98,19 @@
         }
         public void SearchMenu()
         {
-            Console.WriteLine("Do you want to search for a pizza by name or by number?");
-            Console.WriteLine("1. Search for a pizza by number");
-            Console.WriteLine("2. Search for a pizza by name");
-            Console.WriteLine("3. Quit search");
-            if (int.TryParse(Console.ReadLine(), out int userQueryInt) && userQueryInt <= 3)
+            Console.WriteLine("Enter search query: ");
+            string userInput = Console.ReadLine() ?? string.Empty;
+
+            foreach (Pizza item in _menuList)
             {
-                switch (userQueryInt) 
+                string tempString1 = item.Number.ToString();
+                string tempstring2 = item.Name;
+                string tempString3 = item.Price.ToString();
+                if (userInput == tempString1 || userInput == tempstring2 || userInput == tempString3)
                 {
-                    case 1:
-                        SearchNumber();
-                        break;
-                    case 2:
-                        SearchName(); 
-                        break;
-                    case 3:
-                        break;
-                    default:
-                        Console.WriteLine("Invalid input, please try again");
-                        break;
+                    Console.WriteLine($" #{item.Number}, Name: {item.Name}, Price: {item.Price}");
                 }
-            }
-            else 
-            { 
-                Console.WriteLine("Not a valid option, please try again");  
-            }
-        }
-        public void SearchNumber()
-        {
-            Console.WriteLine("Enter search query for the number of pizza");
-            if (int.TryParse(Console.ReadLine(), out int searchQueryInt))
-            {
-                if (searchQueryInt <= _menuList.Count)
-                {
-                    for (int i = 0; i < _menuList.Count; i++)
-                    {
-                        Pizza item = _menuList[i];
-                        if (searchQueryInt == item.Number)
-                        {
-                            Console.WriteLine($"Pizza #{searchQueryInt} is {item.Name} and costs {item.Price} kr\n");
-                        }
-                    }
-                }
-                else
-                {
-                    Console.WriteLine($"{searchQueryInt} is not within range\n");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Invalid input, please try again");
-            }
-        }
-        public void SearchName()
-        {
-            Console.WriteLine("Enter search query for the number of pizza");
-            string searchQuery = Console.ReadLine() ?? string.Empty;
-            bool queryFound = false;
-            if (string.IsNullOrEmpty(Console.ReadLine()))
-            {
-                for (int i = 0; i < _menuList.Count; i++)
-                {
-                    Pizza item = _menuList[i];
-                    if (searchQuery.ToLower() == item.Name.ToLower())
-                    {
-                        Console.WriteLine($"Pizza #{i + 1} is {searchQuery} and costs {item.Price} kr\n");
-                        queryFound = !queryFound;
-                        break;
-                    }
-                }
-            }
-            else if (queryFound == false)
-            {
-                Console.WriteLine($"{searchQuery} has not been found\n");
-            }
-            else
-            {
-                Console.WriteLine("Invalid input, please try again");
+                
             }
         }
         #endregion
