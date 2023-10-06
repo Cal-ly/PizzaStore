@@ -2,69 +2,46 @@
 {
     class OrderHandler
     {
-        #region Instance Field
-        private string _timeStamp = "";
-        private string _logEntry;
-        private double _logRevenue = 0;
-        private List<Pizza> _logList = new List<Pizza>() { };
-        #endregion
+        public string TimeStamp { get; private set; } = "";
+        public string LogEntry { get; set; } = "";
+        public double LogRevenue { get; set; } = 0;
+        public List<Pizza> LogList = new() { };
 
-        #region Constructor
         public OrderHandler()
         {   
-            _logEntry = $"Log started at {GenerateTimeStamp()}" ?? "";
-            Pizza timePizza = new Pizza(999, $"Log started at {GenerateTimeStamp()}", 0);
-            _logList.Add(timePizza);
+            LogEntry = $"Log started at {GenerateTimeStamp()}" ?? "";
+            Pizza timePizza = new(999, $"Log started at {GenerateTimeStamp()}", 0);
+            LogList.Add(timePizza);
         }
-        #endregion
-
-        #region Properties
-        public List<Pizza> LogList
-        {
-            get { return _logList; }
-        }
-        public string LogEntry
-        {
-            get { return _logEntry; }
-        }
-        public double LogRevenue
-        {
-            get { return _logRevenue; }
-        }
-        public string TimeStamp
-        {
-            get { return _timeStamp; }
-        }
-        #endregion
 
         #region Method
         public string GenerateTimeStamp()
         {
             DateTime timeNow = DateTime.Now;
-            _timeStamp = timeNow.ToString("dd-MM-yyyy HH:mm:ss");
-            return _timeStamp;
+            TimeStamp = timeNow.ToString("dd-MM-yyyy HH:mm:ss");
+            return TimeStamp;
         }
         public void CreatOrder()
         {
             Console.WriteLine("Creating a new order...");
-            PizzaOrder pizzaOrder = new PizzaOrder();
+            PizzaOrder pizzaOrder = new();
             pizzaOrder.AddPizza2Order();
             Console.WriteLine($"Order {pizzaOrder.OrderName} has been placed.\n");
             Console.WriteLine("Your order details:");
             pizzaOrder.ShowOrder();
             Console.WriteLine($"Total Price: {pizzaOrder.TotalPrice:F2} kr\n");
-            _logRevenue += pizzaOrder.TotalPrice;
+            LogRevenue += pizzaOrder.TotalPrice;
             GenerateTimeStamp();
-            _logEntry = $"{pizzaOrder.OrderName} {_timeStamp}";
-            _logList.AddRange(pizzaOrder.OrderList);
-            Pizza logPizza = new Pizza(999, _logEntry, _logRevenue);
-            _logList.Add(logPizza);
+            LogEntry = $"{pizzaOrder.OrderName} {TimeStamp}";
+            LogList.AddRange(pizzaOrder.OrderList);
+            Pizza logPizza = new(999, LogEntry, LogRevenue);
+            LogList.Add(logPizza);
         }
         public void ShowLog()
         {
-            for (int i = 0; i < _logList.Count; i++)
+            for (int i = 0; i < LogList.Count; i++)
             {
-                Pizza? item = _logList[i];
+                Pizza? item = LogList[i];
                 Console.WriteLine($"#{item.Number} - {item.Name} - {item.Price:F2} kr");
             }
             Console.WriteLine();

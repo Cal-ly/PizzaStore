@@ -4,7 +4,7 @@ class Program
 {
     private static void Main()
     {
-        PizzaMenu menu = new PizzaMenu();
+        //PizzaMenu menu = new PizzaMenu(MenuList);
         OrderHandler orderHandler = new OrderHandler();
         while (true)
         {
@@ -23,21 +23,21 @@ class Program
                     case 1:
                         Console.WriteLine();
                         Console.WriteLine("Big Mamma a la Carte, Bon Appetit <3");
-                        menu.ShowMenu();
+                        PizzaMenu.ShowMenu();
                         break;
                     case 2:
                         Console.WriteLine();
-                        menu.SearchMenu();
+                        PizzaMenu.SearchMenu();
                         break;
                     case 3:
                         Console.WriteLine();
                         Console.WriteLine("Modifying the Pizza Menu...");
-                        menu.AddMenuItem();
+                        PizzaMenu.AddMenuItem();
                         Console.WriteLine("Pizza Menu has been updated.");
                         break;
                     case 4:
                         Console.WriteLine();
-                        menu.ShowMenu();
+                        PizzaMenu.ShowMenu();
                         orderHandler.CreatOrder();
                         break;
                     case 5:
