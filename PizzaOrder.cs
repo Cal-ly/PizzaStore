@@ -18,11 +18,6 @@
         #endregion
 
         #region Method
-        //public static int GenerateOrderId()
-        //{
-        //    nextOrderId++;
-        //    return nextOrderId;
-        //}
         public void ShowOrder()
         {
             Console.WriteLine($"This is: {OrderName}");
@@ -32,7 +27,6 @@
                 Console.WriteLine($"#{item.Number}, {item.Name}, {item.Price:F2} kr");
             }
         }
-
         public void AddPizza2Order()
         {
             while (true) // Start of order
@@ -113,7 +107,6 @@
                 }
                 else if (userConsole == "n")
                 {
-                    //GenerateOrderId();
                     break;
                 }
                 else
@@ -121,7 +114,7 @@
                     Console.WriteLine("Invalid input. Please choose a valid option.");
                 }
 
-            } //while (true); // End of order
+            }
         }
         #endregion
     }

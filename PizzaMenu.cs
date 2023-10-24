@@ -24,7 +24,7 @@ namespace PizzaStore
             }
             Console.WriteLine();
         }
-        public static void AddMenuItem()
+        public static void AddMenuItem() //Can both add and overwrite a Menu item
         {
             Console.WriteLine("Type a list number for the new pizza:");
             if (int.TryParse(Console.ReadLine(), out int entryNum))

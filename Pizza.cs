@@ -16,7 +16,7 @@
         public Pizza()
         {
             Number = 0;
-            Name = "Default";
+            Name = "DefaultPizza";
             Price = 0;
         }
     }
