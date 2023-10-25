@@ -6,7 +6,7 @@
         private static int nextOrderId = 1;
         public string OrderName { get; }
         public double TotalPrice { get; private set; }
-        public List<Pizza> OrderList { get; } = new List<Pizza>() { };
+        public List<Pizza> OrderList { get; set;  } = new() { };
         #endregion
 
         #region Constructor
@@ -32,12 +32,12 @@
             while (true) // Start of order
             {
                 Console.WriteLine("Do you want to add a pizza to the order? (y/n)");
-                string userConsole = Console.ReadLine() ?? string.Empty;
+                string userConsole = Store.ReadYesNo();
                 userConsole?.ToLower();
                 if (userConsole == "y")
                 {
                     Console.WriteLine("Choose a pizza from the menu (enter a number):");
-                    string userChoiceString = Console.ReadLine() ?? string.Empty;
+                    string userChoiceString = Store.ReadYesNo();
                     int userChoice = int.Parse(userChoiceString);
                     
                     if (PizzaMenu.Menu.ContainsKey(userChoice))
@@ -47,10 +47,10 @@
                             Number = PizzaMenu.Menu[userChoice].Number,
                             Name = PizzaMenu.Menu[userChoice].Name,
                             Price = PizzaMenu.Menu[userChoice].Price
-                        }; // Create a placeholder Pizza object and fills ir with the chosen pizza from the menu
+                        }; // Create a placeholder Pizza object and fills it with the chosen pizza from the menu
                         
                         Console.WriteLine("Do you want to add toppings to this pizza? (y/n)");
-                        string addToppingsChoice = Console.ReadLine() ?? string.Empty;
+                        string addToppingsChoice = Store.ReadYesNo();
                         addToppingsChoice?.ToLower();
 
                         if (addToppingsChoice == "y")

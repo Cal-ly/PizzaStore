@@ -4,18 +4,9 @@ class Program
 {
     private static void Main()
     {
-        //PizzaMenu menu = new PizzaMenu(MenuList);
         OrderHandler orderHandler = new OrderHandler();
         while (true)
         {
-            Console.WriteLine("Welcome to Pizza Store!");
-            Console.WriteLine("1. Show the Pizza Menu");
-            Console.WriteLine("2. Search the menu");
-            Console.WriteLine("3. Modify the Pizza Menu");
-            Console.WriteLine("4. Create a new order");
-            Console.WriteLine("5. Show todays orderlog");
-            Console.WriteLine("6. Exit");
-
             if (int.TryParse(Console.ReadLine(), out int userChoice) && userChoice <= 6)
             {
                 switch (userChoice)

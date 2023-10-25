@@ -8,7 +8,13 @@ namespace PizzaStore
 {
     class CustomerFile
     {
-        public static List<Customer> Customers { get; set;  } = new List<Customer>() { };
+        public static List<Customer> Customers { get; set; } = new() { };
+
+        public CustomerFile()
+        {
+            Customer customer1 = new("Default customer", "Street 1", "12345", "City", "12345678", false);
+            Customers.Add(customer1); //Customer ID 100 is now default customer (e.g. walk-in customer)
+        }
 
         public static void AddCustomer()
         {
@@ -22,51 +28,127 @@ namespace PizzaStore
             string city = Console.ReadLine() ?? string.Empty;
             Console.WriteLine("Enter customer phone number:");
             string phoneNumber = Console.ReadLine() ?? string.Empty;
-            Customer customer = new(name, address, postalCode, city, phoneNumber);
+            Console.WriteLine("Is customer member of PizzaPals? (y/n)");
+            string member = Console.ReadLine() ?? string.Empty;
+            member?.ToLower();
+            bool memberBool = false;
+            if (member == "y") { memberBool = true; }
+            else if (member == "n") { memberBool = false; }
+            else { Console.WriteLine("Invalid input, try again"); }
+
+            if (string.IsNullOrEmpty(name) || 
+                string.IsNullOrEmpty(address) || 
+                string.IsNullOrEmpty(postalCode) || 
+                string.IsNullOrEmpty(city) ||
+                string.IsNullOrEmpty(phoneNumber) ||
+                string.IsNullOrEmpty(member) )
+            {
+                Console.WriteLine("Some fields have been left empty\nYou can update the customer");
+            }
+            Customer customer = new(name, address, postalCode, city, phoneNumber, memberBool);
             Customers.Add(customer);
-            Console.WriteLine($"Customer {customer.Name} has been added to the customer list.\n");
+            Console.WriteLine($"{customer.Name} has been added to the customer list.\n");
+            Console.WriteLine(customer);
         }
         public static void ShowCustomers()
         {
             Console.WriteLine("Customer list:");
             foreach (Customer customer in Customers)
             {
-                Console.WriteLine($"ID: {customer.Id}, Name: {customer.Name}, Address: {customer.Address}, Postal Code: {customer.PostalCode}, City: {customer.City}, Phone Number: {customer.PhoneNumber}");
+                Console.WriteLine(customer);
             }
-            Console.WriteLine();
         }
         public static void UpdateCustomer()
         {
+            bool loopRun = false;
             Console.WriteLine("Enter customer ID, for the customer you want to delete");
-            string updateID = Console.ReadLine() ?? string.Empty;
-            int updateIDInt = int.Parse(updateID);
+            int updateIDInt = int.Parse(Console.ReadLine() ?? string.Empty);
             foreach (Customer customer in Customers)
             {
+                bool hasUpdated = false;
                 if (customer.Id == updateIDInt)
                 {
-                    Console.WriteLine("Enter customer name:");
-                    string name = Console.ReadLine() ?? string.Empty;
-                    Console.WriteLine("Enter customer address:");
-                    string address = Console.ReadLine() ?? string.Empty;
-                    Console.WriteLine("Enter customer postal code:");
-                    string postalCode = Console.ReadLine() ?? string.Empty;
-                    Console.WriteLine("Enter customer city:");
-                    string city = Console.ReadLine() ?? string.Empty;
-                    Console.WriteLine("Enter customer phone number:");
-                    string phoneNumber = Console.ReadLine() ?? string.Empty;
-                    customer.Name = name;
-                    customer.Address = address;
-                    customer.PostalCode = postalCode;
-                    customer.City = city;
-                    customer.PhoneNumber = phoneNumber;
-                    Console.WriteLine($"Customer {customer.Name} has been updated.\n");
+                    Console.WriteLine("Update name? (y/n)");
+                    if (Console.ReadLine() == "y")
+                    {
+                        Console.WriteLine("Enter customer name:");
+                        string name = Console.ReadLine() ?? string.Empty;
+                        customer.Name = name;
+                        hasUpdated = true;
+                    }
+                    Console.WriteLine("Update address? (y/n)");
+                    if (Console.ReadLine() == "y")
+                    {
+                        Console.WriteLine("Enter customer address:");
+                        string address = Console.ReadLine() ?? string.Empty;
+                        customer.Address = address;
+                        hasUpdated = true;
+                    }
+                    Console.WriteLine("Update postal code? (y/n)");
+                    if (Console.ReadLine() == "y")
+                    {
+                        Console.WriteLine("Enter customer postal code:");
+                        string postalCode = Console.ReadLine() ?? string.Empty;
+                        customer.PostalCode = postalCode;
+                        hasUpdated = true;
+                    }
+                    Console.WriteLine("Update city? (y/n)");
+                    if (Console.ReadLine() == "y")
+                    {
+                        Console.WriteLine("Enter customer city:");
+                        string city = Console.ReadLine() ?? string.Empty;
+                        customer.City = city;
+                        hasUpdated = true;
+                    }
+                    Console.WriteLine("Update phone number? (y/n)");
+                    if (Console.ReadLine() == "y")
+                    {
+                        Console.WriteLine("Enter customer phone number:");
+                        string phoneNumber = Console.ReadLine() ?? string.Empty;
+                        customer.PhoneNumber = phoneNumber;
+                        hasUpdated = true;
+                    }
+                    Console.WriteLine("Update membership? (y/n)");
+                    if(Console.ReadLine() == "y")
+                    {
+                        Console.WriteLine("Is customer member of PizzaPals? (y/n)");
+                        string member = Console.ReadLine() ?? string.Empty;
+                        member?.ToLower();
+                        bool memberBool;
+                        if (member == "y")
+                        {
+                            memberBool = true;
+                            customer.Member = memberBool;
+                            hasUpdated = true;
+                        }
+                        else if (member == "n")
+                        {
+                            memberBool = false;
+                            customer.Member = memberBool;
+                            hasUpdated = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid input, try again");
+                        }
+                    }
+                    if (!hasUpdated)
+                    {
+                        Console.WriteLine("No information has been updated");
+                    }
+                    else if (hasUpdated)
+                    {
+                        Console.WriteLine($"Customer #{customer.Id} {customer.Name} has been updated.\n");
+                        Console.WriteLine($"Updated information: {customer}");
+                    }
                     break;
                 }
-                else { Console.WriteLine("Invalid ID, please try again");  }
             }
+            if (loopRun == false) { Console.WriteLine("Invalid ID, please try again"); }
         }
         public static void DeleteCustomer()
         {
+            bool loopRun = false;
             Console.WriteLine("Enter customer ID, for the customer you want to delete");
             string deleteID = Console.ReadLine() ?? string.Empty;
             int deleteIDInt = int.Parse(deleteID);
@@ -74,12 +156,12 @@ namespace PizzaStore
             {
                 if (customer.Id == deleteIDInt)
                 {
-                    Customers.Remove(customer);
                     Console.WriteLine($"Customer {customer.Name} has been deleted from the customer list.\n");
+                    Customers.Remove(customer);
                     break;
                 }
-                else { Console.WriteLine("Invalid ID, please try again"); }
             }
+            if (loopRun == false) { Console.WriteLine("Invalid ID, please try again"); }
         }
     }
 }

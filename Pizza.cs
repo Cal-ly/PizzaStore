@@ -12,12 +12,15 @@
             Name = name;
             Price = price;
         }
-
         public Pizza()
         {
             Number = 0;
             Name = "DefaultPizza";
             Price = 0;
+        }
+        public override string ToString()
+        {
+            return $"{{{nameof(Number)}={Number}, {nameof(Name)}={Name}, {nameof(Price)}={Price}}}";
         }
     }
 }

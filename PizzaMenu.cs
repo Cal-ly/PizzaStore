@@ -18,6 +18,7 @@ namespace PizzaStore
         #region Methods
         public static void ShowMenu()
         {
+            Console.WriteLine("Big Mamma a la Carte, Bon Appetit <3");
             foreach (KeyValuePair<int, Pizza> item in Menu)
             {
                 Console.WriteLine($"#{item.Key} - {item.Value.Name} - {item.Value.Price:F2} kr");
@@ -32,7 +33,7 @@ namespace PizzaStore
                 if (Menu.ContainsKey(entryNum))
                 {
                     Console.WriteLine("The entry exists and will be overwritten (y/n)");
-                    string overWrite = Console.ReadLine() ?? string.Empty;
+                    string overWrite = Store.ReadYesNo();
                     if (string.IsNullOrEmpty(overWrite)) 
                     { 
                         Console.WriteLine("Invalid entry, try again");
@@ -40,7 +41,7 @@ namespace PizzaStore
                     else if (overWrite == "y")
                     {
                         Console.WriteLine("Type name for the new pizza:");
-                        string entryName = Console.ReadLine() ?? string.Empty;
+                        string entryName = Store.ReadYesNo();
                         if (string.IsNullOrEmpty(entryName))
                         {
                             Console.WriteLine("Invalid entry, try again");
@@ -112,14 +113,13 @@ namespace PizzaStore
         public static void SearchMenu()
         {
             Console.WriteLine("Enter search query: ");
-            string userInput = Console.ReadLine() ?? string.Empty;
+            string userInput = Store.ReadYesNo();
             if (string.IsNullOrEmpty(userInput))
             {
                 Console.WriteLine("Invalid user input, try again");
             }
             else
             {
-                userInput?.ToLower();
                 foreach (KeyValuePair<int, Pizza> item in Menu)
                 {
                     string tempString1 = item.Key.ToString();

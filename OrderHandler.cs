@@ -5,7 +5,7 @@
         public string TimeStamp { get; private set; } = "";
         public string LogEntry { get; set; } = "";
         public double LogRevenue { get; set; } = 0;
-        public List<Pizza> LogList = new() { };
+        public static List<Pizza> LogList { get; set; } = new() { };
 
         public OrderHandler()
         {   
@@ -37,7 +37,7 @@
             Pizza logPizza = new(999, LogEntry, LogRevenue);
             LogList.Add(logPizza);
         }
-        public void ShowLog()
+        public static void ShowLog()
         {
             for (int i = 0; i < LogList.Count; i++)
             {
