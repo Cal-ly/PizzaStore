@@ -1,14 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace PizzaStore
 {
     class Store
     {
-        public static int ReadUserChoice()
+        private int userIntGlobal;
+
+        public int GetUserIntGlobal()
+        {
+            return userIntGlobal;
+        }
+
+        public void SetUserIntGlobal(int value)
+        {
+            userIntGlobal = value;
+        }
+
+        public static int ReadUserInt()
         {
             string choice = Console.ReadLine() ?? string.Empty;
             if (int.TryParse(choice, out int input))
@@ -19,6 +33,12 @@ namespace PizzaStore
             {
                 return -1;
             }
+        }
+        public static string ReadYesNo() 
+        {
+            string userConsole = Console.ReadLine() ?? string.Empty;
+            userConsole = userConsole.ToLower();
+            return userConsole;
         }
         public static int ShowStore()
         {
@@ -33,10 +53,9 @@ namespace PizzaStore
             Console.WriteLine("\t6. Show order log");
             Console.WriteLine("\t0. Exit");
             Console.WriteLine();
-            return ReadUserChoice();
+            return ReadUserInt();
         }
-
-        public static int MenuOptions()
+        public static int ShowMenuOptions()
         {
             Console.Clear();
             Console.WriteLine("--Menu options--");
@@ -45,10 +64,10 @@ namespace PizzaStore
             Console.WriteLine("\t3. Add or update menu item");
             Console.WriteLine("\t0. Back to main menu");
             Console.WriteLine();
-            return ReadUserChoice();
+            return ReadUserInt();
+            
         }
-
-        public static int CustomerOptions()
+        public static int ShowCustomerOptions()
         {
             Console.Clear();
             Console.WriteLine("--Customer options--");
@@ -58,21 +77,14 @@ namespace PizzaStore
             Console.WriteLine("\t4. Delete customer");
             Console.WriteLine("\t0. Back to main menu");
             Console.WriteLine();
-            return ReadUserChoice();
+            return ReadUserInt();
         }
-        public static string ReadYesNo() 
-        {
-            string userConsole = Console.ReadLine() ?? string.Empty;
-            userConsole = userConsole.ToLower();
-            return userConsole;
-        }
-
         public static void RunStore() 
         {
-            int userChoice = ShowStore(); //Returns an int with the ReadUserChoice() method
-            while (ReadUserChoice() != 0)
+            int userInt = ShowStore(); // Returns an int with the ReadUserInt() method
+            while (true)
             {
-                switch (userChoice)
+                switch (userInt)
                 {
                     case 1: // Show menu
                         Console.Clear();
@@ -80,7 +92,7 @@ namespace PizzaStore
                         break;
                     case 2: // Other menu options
                         Console.Clear();
-                        MenuOptions();
+                        ShowMenuOptions();
                         PizzaMenu.SearchMenu();
                         break;
                     case 3: // Show customer list
@@ -89,11 +101,11 @@ namespace PizzaStore
                         break;
                     case 4: // Other customer options
                         Console.Clear();
-                        CustomerOptions();
+                        ShowCustomerOptions();
                         break;
                     case 5: // Create order
                         Console.Clear();
-                        OrderHandler.CreatOrder();
+                        PizzaOrder pizzaOrder = OrderHandler.CreatOrder();
                         break;
                     case 6: // Show order log
                         Console.Clear();
@@ -101,12 +113,77 @@ namespace PizzaStore
                         break;
                     case 0:
                         Console.Clear();
-                        Console.WriteLine("Goodbye!\n");
+                        Console.WriteLine("----------------");
+                        Console.WriteLine("--- Goodbye! ---");
+                        Console.WriteLine("----------------");
+                        Environment.Exit(0);
                         break;
                     default:
                         Console.WriteLine("Invalid option. Please choose a valid option.");
                         break;
                 }
+            }
+        }
+        public static void RunMenuOptions()
+        {
+            int userInt = ShowMenuOptions(); // Returns an int with the ReadUserInt() method
+            while (true)
+            {
+                switch (userInt)
+                {
+                    case 1:
+                        Console.Clear();
+                        PizzaMenu.ShowMenu();
+                        break;
+                    case 2:
+                        Console.Clear();
+                        PizzaMenu.SearchMenu();
+                        break;
+                    case 3:
+                        Console.Clear();
+                        PizzaMenu.AddMenuItem();
+                        break;
+                    case 0: // Back to main menu
+                        ShowStore();
+                        break;
+                    default:
+                        Console.WriteLine("Invalid option. Please choose a valid option.");
+                        break;
+                }
+                ReadUserInt();
+            }
+        }
+        public static void RunCustomerOptions()
+        {
+            int userInt = ShowCustomerOptions(); // Returns an int with the ReadUserInt() method
+            while (true)
+            {
+                switch (userInt)
+                {
+                    case 1:
+                        Console.Clear();
+                        CustomerFile.ShowCustomers();
+                        break;
+                    case 2:
+                        Console.Clear();
+                        CustomerFile.AddCustomer();
+                        break;
+                    case 3:
+                        Console.Clear();
+                        CustomerFile.UpdateCustomer();
+                        break;
+                    case 4:
+                        Console.Clear();
+                        CustomerFile.DeleteCustomer();
+                        break;
+                    case 0: // Back to main menu
+                        SetUserIntGlobal(ShowStore());
+                        break;
+                    default:
+                        Console.WriteLine("Invalid option. Please choose a valid option.");
+                        break;
+                }
+                ReadUserInt();
             }
         }
     }

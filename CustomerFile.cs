@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace PizzaStore
@@ -9,13 +10,11 @@ namespace PizzaStore
     class CustomerFile
     {
         public static List<Customer> Customers { get; set; } = new() { };
-
         public CustomerFile()
         {
-            Customer customer1 = new("Default customer", "Street 1", "12345", "City", "12345678", false);
-            Customers.Add(customer1); //Customer ID 100 is now default customer (e.g. walk-in customer)
+            Customer customer1 = new("Default customer", "", "", "", "", false);
+            Customers.Add(customer1); //Customer ID 1000 is now default customer (e.g. walk-in customer)
         }
-
         public static void AddCustomer()
         {
             Console.WriteLine("Enter customer name:");
@@ -60,8 +59,8 @@ namespace PizzaStore
         }
         public static void UpdateCustomer()
         {
-            bool loopRun = false;
-            Console.WriteLine("Enter customer ID, for the customer you want to delete");
+            bool loopHasRun = false;
+            Console.WriteLine("Enter customer ID, for the customer you want to update");
             int updateIDInt = int.Parse(Console.ReadLine() ?? string.Empty);
             foreach (Customer customer in Customers)
             {
@@ -132,11 +131,11 @@ namespace PizzaStore
                             Console.WriteLine("Invalid input, try again");
                         }
                     }
-                    if (!hasUpdated)
+                    if (hasUpdated == false)
                     {
                         Console.WriteLine("No information has been updated");
                     }
-                    else if (hasUpdated)
+                    else if (hasUpdated == true)
                     {
                         Console.WriteLine($"Customer #{customer.Id} {customer.Name} has been updated.\n");
                         Console.WriteLine($"Updated information: {customer}");
@@ -144,7 +143,7 @@ namespace PizzaStore
                     break;
                 }
             }
-            if (loopRun == false) { Console.WriteLine("Invalid ID, please try again"); }
+            if (loopHasRun == false) { Console.WriteLine("Invalid ID, please try again"); }
         }
         public static void DeleteCustomer()
         {
@@ -162,6 +161,30 @@ namespace PizzaStore
                 }
             }
             if (loopRun == false) { Console.WriteLine("Invalid ID, please try again"); }
+        }
+        public static Customer FindCustomer()
+        {
+            Console.WriteLine("Enter customer ID:");
+            int customerId = Store.ReadUserInt();
+            if (Customers.Any(c => c.Id == customerId) == false) // Check if customer ID exists
+            {
+                while (Customers.Any(c => c.Id == customerId) == false)
+                {
+                    Console.WriteLine("Customer ID does not exist, enter '1000' for default customer");
+                    Console.WriteLine("Please try again");
+                    customerId = Store.ReadUserInt();
+                }
+            }
+            else if (Customers.Any(c => c.Id == customerId) == true)
+            {
+                Customer tempCustomer = Customers[customerId];
+                Console.WriteLine("Customer ID found:");
+                Console.WriteLine(tempCustomer);
+                return tempCustomer;
+            }
+            Console.WriteLine("Error - System will use Default Customer");
+            Customer defaultCustomer = new();
+            return defaultCustomer;
         }
     }
 }

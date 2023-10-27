@@ -6,7 +6,7 @@
         private static int nextOrderId = 1;
         public string OrderName { get; }
         public double TotalPrice { get; private set; }
-        public List<Pizza> OrderList { get; set;  } = new() { };
+        public List<Pizza> OrderList { get; set; } = new() { };
         #endregion
 
         #region Constructor

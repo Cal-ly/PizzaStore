@@ -8,7 +8,7 @@ namespace PizzaStore
 {
     class Customer
     {
-        private static int nextId = 100;
+        private static int nextId = 1000;
         public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
@@ -16,6 +16,10 @@ namespace PizzaStore
         public string City { get; set; }
         public string PhoneNumber { get; set; }
         public bool Member { get; set; }
+        public string MemberDisplay
+        {
+            get { return Member ? "Yes" : "No"; }
+        }
         public Customer()
         {
             Id = 0;
@@ -28,7 +32,8 @@ namespace PizzaStore
         }
         public Customer(string name, string address, string postalCode, string city, string phoneNumber, bool member)
         {
-            Id += nextId;
+            nextId++;
+            Id = nextId;
             Name = name;
             Address = address;
             PostalCode = postalCode;
@@ -39,7 +44,7 @@ namespace PizzaStore
 
         public override string ToString()
         {
-            return $"{{{nameof(Id)}={Id}, {nameof(Name)}={Name}, {nameof(Address)}={Address}, {nameof(PostalCode)}={PostalCode}, {nameof(City)}={City}, {nameof(PhoneNumber)}={PhoneNumber}, {nameof(Member)}={Member}}}";
+            return $"{{{nameof(Id)}={Id}, {nameof(Name)}={Name}, {nameof(Address)}={Address}, {nameof(PostalCode)}={PostalCode}, {nameof(City)}={City}, {nameof(PhoneNumber)}={PhoneNumber}, Member: {MemberDisplay}}}";
         }
     }
 }
