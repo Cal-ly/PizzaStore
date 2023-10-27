@@ -21,8 +21,10 @@ namespace PizzaStore
             string TimeStamp = timeNow.ToString("dd-MM-yyyy HH:mm:ss");
             return TimeStamp;
         }
-        public static PizzaOrder CreatOrder()
+        public static PizzaOrder CreatOrder(Customer InputCustomer)
         {
+            Customer customer = InputCustomer;
+            Pizza customerPizza = AddCustomerInfoPizza(customer);
             Console.WriteLine("Creating a new order...");
             PizzaOrder pizzaOrder = new();
             pizzaOrder.AddPizza2Order();
@@ -30,7 +32,7 @@ namespace PizzaStore
             Console.WriteLine("Your order details:");
             pizzaOrder.ShowOrder();
             Console.WriteLine($"Total Price: {pizzaOrder.TotalPrice:F2} kr\n");
-            pizzaOrder.OrderList.Add(AddCustomerInfoPizza()); 
+            pizzaOrder.OrderList.Add(customerPizza); 
             AddLog(pizzaOrder); // Order now include a line with customer info
             return pizzaOrder;
         }
@@ -43,9 +45,9 @@ namespace PizzaStore
             Pizza logPizza = new(999, LogEntry, LogRevenue);
             LogList.Add(logPizza);
         }
-        public static Pizza AddCustomerInfoPizza()
+        public static Pizza AddCustomerInfoPizza(Customer InputCustomer)
         {
-            Customer customer = CustomerFile.FindCustomer();
+            Customer customer = InputCustomer;
             string memberStatus = "Member: ";
             if (customer.Member) { memberStatus += "Yes"; }
             else { memberStatus += "No"; }

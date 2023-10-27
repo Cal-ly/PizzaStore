@@ -105,7 +105,9 @@ namespace PizzaStore
                         break;
                     case 5: // Create order
                         Console.Clear();
-                        PizzaOrder pizzaOrder = OrderHandler.CreatOrder();
+                        Customer customer = CustomerFile.FindCustomer();
+                        PizzaOrder pizzaOrder = new();
+                        pizzaOrder = OrderHandler.CreatOrder(customer);
                         break;
                     case 6: // Show order log
                         Console.Clear();
