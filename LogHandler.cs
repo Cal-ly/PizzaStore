@@ -18,6 +18,12 @@ namespace PizzaStore
             CustomerLogList.Add(startCustomer);
         }
 
-        public static 
+        public static void AddEntryToHandler()
+        {             
+            string TimeStamp = OrderHandler.GenerateTimeStamp();
+            CustomerLogList.AddRange(CustomerFile.Customers);
+            Customer logCustomer = new($"Customer list {TimeStamp}", "", "", "", "", true);
+            CustomerLogList.Add(logCustomer);
+        }
     }
 }

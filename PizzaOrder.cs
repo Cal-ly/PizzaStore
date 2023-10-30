@@ -2,20 +2,16 @@
 {
     class PizzaOrder
     {
-        #region Instance Fields
         private static int nextOrderId = 1;
         public string OrderName { get; }
         public double TotalPrice { get; private set; }
         public List<Pizza> OrderList { get; set; } = new() { };
-        #endregion
 
-        #region Constructor
         public PizzaOrder()
         {
             OrderName = "Order #" + $"{nextOrderId}"; //Every order has now a unique ID
             nextOrderId++;
         }
-        #endregion
 
         #region Method
         public void ShowOrder()
@@ -27,7 +23,7 @@
                 Console.WriteLine($"#{item.Number}, {item.Name}, {item.Price:F2} kr");
             }
         }
-        public void AddPizza2Order()
+        public void AddPizzaToOrder()
         {
             while (true) // Start of order
             {

@@ -20,9 +20,10 @@ namespace PizzaStore
         {
             get { return Member ? "Yes" : "No"; }
         }
+
         public Customer()
         {
-            Id = 0;
+            Id = 1000;
             Name = "";
             Address = "";
             PostalCode = "";
@@ -44,7 +45,7 @@ namespace PizzaStore
 
         public override string ToString()
         {
-            return $"{{{nameof(Id)}={Id}, {nameof(Name)}={Name}, {nameof(Address)}={Address}, {nameof(PostalCode)}={PostalCode}, {nameof(City)}={City}, {nameof(PhoneNumber)}={PhoneNumber}, Member: {MemberDisplay}}}";
+            return $"{nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(Address)}: {Address}, {nameof(PostalCode)}: {PostalCode}, {nameof(City)}: {City}, {nameof(PhoneNumber)}: {PhoneNumber}, Member: {MemberDisplay}";
         }
     }
 }

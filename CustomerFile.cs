@@ -10,11 +10,13 @@ namespace PizzaStore
     class CustomerFile
     {
         public static List<Customer> Customers { get; set; } = new() { };
-        public CustomerFile()
+
+        static CustomerFile()
         {
-            Customer customer1 = new("Default customer", "", "", "", "", false);
+            Customer customer1 = new();
             Customers.Add(customer1); //Customer ID 1000 is now default customer (e.g. walk-in customer)
         }
+
         public static void AddCustomer()
         {
             Console.WriteLine("Enter customer name:");
@@ -48,6 +50,7 @@ namespace PizzaStore
             Customers.Add(customer);
             Console.WriteLine($"{customer.Name} has been added to the customer list.\n");
             Console.WriteLine(customer);
+            Console.WriteLine();
         }
         public static void ShowCustomers()
         {
@@ -56,6 +59,7 @@ namespace PizzaStore
             {
                 Console.WriteLine(customer);
             }
+            Console.WriteLine();
         }
         public static void UpdateCustomer()
         {
@@ -139,6 +143,7 @@ namespace PizzaStore
                     {
                         Console.WriteLine($"Customer #{customer.Id} {customer.Name} has been updated.\n");
                         Console.WriteLine($"Updated information: {customer}");
+                        Console.WriteLine();
                     }
                     break;
                 }
