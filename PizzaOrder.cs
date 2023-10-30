@@ -22,11 +22,13 @@
                 Pizza? item = OrderList[i];
                 Console.WriteLine($"#{item.Number}, {item.Name}, {item.Price:F2} kr");
             }
+            Console.WriteLine();
         }
         public void AddPizzaToOrder()
         {
             while (true) // Start of order
             {
+                Console.Clear();
                 Console.WriteLine("Do you want to add a pizza to the order? (y/n)");
                 string userConsole = Store.ReadYesNo();
                 userConsole?.ToLower();
@@ -109,7 +111,6 @@
                 {
                     Console.WriteLine("Invalid input. Please choose a valid option.");
                 }
-
             }
         }
         #endregion

@@ -66,17 +66,17 @@ namespace PizzaStore
             bool loopHasRun = false;
             Console.WriteLine("Enter customer ID, for the customer you want to update");
             int updateIDInt = int.Parse(Console.ReadLine() ?? string.Empty);
-            foreach (Customer customer in Customers)
+            foreach (Customer c in Customers)
             {
                 bool hasUpdated = false;
-                if (customer.Id == updateIDInt)
+                if (Customers.Any(c => c.Id == updateIDInt))
                 {
                     Console.WriteLine("Update name? (y/n)");
                     if (Console.ReadLine() == "y")
                     {
                         Console.WriteLine("Enter customer name:");
                         string name = Console.ReadLine() ?? string.Empty;
-                        customer.Name = name;
+                        c.Name = name;
                         hasUpdated = true;
                     }
                     Console.WriteLine("Update address? (y/n)");
@@ -84,7 +84,7 @@ namespace PizzaStore
                     {
                         Console.WriteLine("Enter customer address:");
                         string address = Console.ReadLine() ?? string.Empty;
-                        customer.Address = address;
+                        c.Address = address;
                         hasUpdated = true;
                     }
                     Console.WriteLine("Update postal code? (y/n)");
@@ -92,7 +92,7 @@ namespace PizzaStore
                     {
                         Console.WriteLine("Enter customer postal code:");
                         string postalCode = Console.ReadLine() ?? string.Empty;
-                        customer.PostalCode = postalCode;
+                        c.PostalCode = postalCode;
                         hasUpdated = true;
                     }
                     Console.WriteLine("Update city? (y/n)");
@@ -100,7 +100,7 @@ namespace PizzaStore
                     {
                         Console.WriteLine("Enter customer city:");
                         string city = Console.ReadLine() ?? string.Empty;
-                        customer.City = city;
+                        c.City = city;
                         hasUpdated = true;
                     }
                     Console.WriteLine("Update phone number? (y/n)");
@@ -108,7 +108,7 @@ namespace PizzaStore
                     {
                         Console.WriteLine("Enter customer phone number:");
                         string phoneNumber = Console.ReadLine() ?? string.Empty;
-                        customer.PhoneNumber = phoneNumber;
+                        c.PhoneNumber = phoneNumber;
                         hasUpdated = true;
                     }
                     Console.WriteLine("Update membership? (y/n)");
@@ -121,13 +121,13 @@ namespace PizzaStore
                         if (member == "y")
                         {
                             memberBool = true;
-                            customer.Member = memberBool;
+                            c.Member = memberBool;
                             hasUpdated = true;
                         }
                         else if (member == "n")
                         {
                             memberBool = false;
-                            customer.Member = memberBool;
+                            c.Member = memberBool;
                             hasUpdated = true;
                         }
                         else
@@ -141,8 +141,8 @@ namespace PizzaStore
                     }
                     else if (hasUpdated == true)
                     {
-                        Console.WriteLine($"Customer #{customer.Id} {customer.Name} has been updated.\n");
-                        Console.WriteLine($"Updated information: {customer}");
+                        Console.WriteLine($"Customer #{c.Id} {c.Name} has been updated.\n");
+                        Console.WriteLine($"Updated information: {c}");
                         Console.WriteLine();
                     }
                     break;
@@ -167,6 +167,7 @@ namespace PizzaStore
             }
             if (loopRun == false) { Console.WriteLine("Invalid ID, please try again"); }
         }
+
         public static Customer FindCustomer()
         {
             Console.WriteLine("Enter customer ID:");
@@ -182,7 +183,7 @@ namespace PizzaStore
             }
             else if (Customers.Any(c => c.Id == customerId) == true)
             {
-                Customer tempCustomer = Customers[customerId];
+                Customer tempCustomer = Customers.First(c => c.Id == customerId);
                 Console.WriteLine("Customer ID found:");
                 Console.WriteLine(tempCustomer);
                 return tempCustomer;
