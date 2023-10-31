@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PizzaStore
 {
-    class CustomerFile
+    public class CustomerFile
     {
         public static List<Customer> Customers { get; set; } = new() { };
 
@@ -44,8 +44,9 @@ namespace PizzaStore
                 string.IsNullOrEmpty(phoneNumber) ||
                 string.IsNullOrEmpty(member) )
             {
-                Console.WriteLine("Some fields have been left empty\nYou can update the customer");
+                Console.WriteLine("Some fields have been left empty\nYou can update the customer again, if needed");
             }
+
             Customer customer = new(name, address, postalCode, city, phoneNumber, memberBool);
             Customers.Add(customer);
             Console.WriteLine($"{customer.Name} has been added to the customer list.\n");
@@ -65,18 +66,18 @@ namespace PizzaStore
         {
             bool loopHasRun = false;
             Console.WriteLine("Enter customer ID, for the customer you want to update");
-            int updateIDInt = int.Parse(Console.ReadLine() ?? string.Empty);
-            foreach (Customer c in Customers)
+            int updateID = Store.ReadCustomerInt();
+            foreach (Customer costumer in Customers)
             {
                 bool hasUpdated = false;
-                if (Customers.Any(c => c.Id == updateIDInt))
+                if (Customers.Any(costumer => costumer.Id == updateID))
                 {
                     Console.WriteLine("Update name? (y/n)");
                     if (Console.ReadLine() == "y")
                     {
                         Console.WriteLine("Enter customer name:");
                         string name = Console.ReadLine() ?? string.Empty;
-                        c.Name = name;
+                        costumer.Name = name;
                         hasUpdated = true;
                     }
                     Console.WriteLine("Update address? (y/n)");
@@ -84,7 +85,7 @@ namespace PizzaStore
                     {
                         Console.WriteLine("Enter customer address:");
                         string address = Console.ReadLine() ?? string.Empty;
-                        c.Address = address;
+                        costumer.Address = address;
                         hasUpdated = true;
                     }
                     Console.WriteLine("Update postal code? (y/n)");
@@ -92,7 +93,7 @@ namespace PizzaStore
                     {
                         Console.WriteLine("Enter customer postal code:");
                         string postalCode = Console.ReadLine() ?? string.Empty;
-                        c.PostalCode = postalCode;
+                        costumer.PostalCode = postalCode;
                         hasUpdated = true;
                     }
                     Console.WriteLine("Update city? (y/n)");
@@ -100,7 +101,7 @@ namespace PizzaStore
                     {
                         Console.WriteLine("Enter customer city:");
                         string city = Console.ReadLine() ?? string.Empty;
-                        c.City = city;
+                        costumer.City = city;
                         hasUpdated = true;
                     }
                     Console.WriteLine("Update phone number? (y/n)");
@@ -108,7 +109,7 @@ namespace PizzaStore
                     {
                         Console.WriteLine("Enter customer phone number:");
                         string phoneNumber = Console.ReadLine() ?? string.Empty;
-                        c.PhoneNumber = phoneNumber;
+                        costumer.PhoneNumber = phoneNumber;
                         hasUpdated = true;
                     }
                     Console.WriteLine("Update membership? (y/n)");
@@ -121,13 +122,13 @@ namespace PizzaStore
                         if (member == "y")
                         {
                             memberBool = true;
-                            c.Member = memberBool;
+                            costumer.Member = memberBool;
                             hasUpdated = true;
                         }
                         else if (member == "n")
                         {
                             memberBool = false;
-                            c.Member = memberBool;
+                            costumer.Member = memberBool;
                             hasUpdated = true;
                         }
                         else
@@ -141,8 +142,8 @@ namespace PizzaStore
                     }
                     else if (hasUpdated == true)
                     {
-                        Console.WriteLine($"Customer #{c.Id} {c.Name} has been updated.\n");
-                        Console.WriteLine($"Updated information: {c}");
+                        Console.WriteLine($"Customer #{costumer.Id} {costumer.Name} has been updated.\n");
+                        Console.WriteLine($"Updated information: {costumer}");
                         Console.WriteLine();
                     }
                     break;
@@ -154,11 +155,10 @@ namespace PizzaStore
         {
             bool loopRun = false;
             Console.WriteLine("Enter customer ID, for the customer you want to delete");
-            string deleteID = Console.ReadLine() ?? string.Empty;
-            int deleteIDInt = int.Parse(deleteID);
+            int deleteID = Store.ReadCustomerInt();
             foreach (Customer customer in Customers)
             {
-                if (customer.Id == deleteIDInt)
+                if (customer.Id == deleteID)
                 {
                     Console.WriteLine($"Customer {customer.Name} has been deleted from the customer list.\n");
                     Customers.Remove(customer);
@@ -168,10 +168,8 @@ namespace PizzaStore
             if (loopRun == false) { Console.WriteLine("Invalid ID, please try again"); }
         }
 
-        public static Customer FindCustomer()
+        public static Customer FindCustomer(int customerId)
         {
-            Console.WriteLine("Enter customer ID:");
-            int customerId = Store.ReadUserInt();
             if (Customers.Any(c => c.Id == customerId) == false) // Check if customer ID exists
             {
                 while (Customers.Any(c => c.Id == customerId) == false)

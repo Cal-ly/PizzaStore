@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PizzaStore
 {
-    class PizzaMenu
+    public class PizzaMenu
     {
         public static Dictionary<int, Pizza> Menu { get; } = new()
         {

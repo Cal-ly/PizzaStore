@@ -33,7 +33,7 @@ namespace PizzaStore
         }
         public static void CreatOrder()
         {
-            Customer customer = CustomerFile.FindCustomer();
+            Customer customer = CustomerFile.FindCustomer(Store.ReadCustomerInt());
             Pizza customerPizza = AddCustomerInfoPizza(customer);
             Console.WriteLine("Creating a new order...");
             PizzaOrder pizzaOrder = new();
@@ -73,21 +73,3 @@ namespace PizzaStore
         #endregion
     }
 }
-
-
-
-
-
-
-//if (CustomerFile.Customers.Any(c => c.Id == customerId)) // Check if customer ID exists
-//{
-//    Console.WriteLine("Customer ID does not exist, please try again");
-//    AddCustomerInfo();
-//}
-
-//public static string GetCustomerName()
-//{
-//    Console.WriteLine("Enter customer name:");
-//    string customerName = Console.ReadLine() ?? string.Empty;
-//    return customerName;
-//}

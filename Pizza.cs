@@ -1,6 +1,6 @@
 ﻿namespace PizzaStore
 {
-    class Pizza
+    public class Pizza
     {
         public int Number { get; set; }
         public string Name { get; set; }

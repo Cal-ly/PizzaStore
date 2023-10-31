@@ -26,6 +26,13 @@ namespace PizzaStore
             userConsole = userConsole.ToLower();
             return userConsole;
         }
+        public static int ReadCustomerInt()
+        {
+            Console.WriteLine("Enter customer ID:");
+            string customerStringID = Console.ReadLine() ?? string.Empty;
+            int customerId = int.Parse(customerStringID);
+            return customerId;
+        }
         public static void PressKeyToCont() 
         {
             Console.WriteLine("Press any key to continue");
@@ -174,10 +181,10 @@ namespace PizzaStore
                         //Console.WriteLine("\t-- Goodbye! --");
                         //Console.WriteLine("\t--------------");
                         Console.WriteLine();
-                        Console.WriteLine("┬─┬ノ( º _ ºノ)");
+                        Console.WriteLine(@"┬─┬ノ( º _ ºノ)");
                         Console.WriteLine("\nPress any key to flip the table\n");
                         Console.ReadKey();
-                        Console.WriteLine("(╯°□°)╯︵ ┻━┻");
+                        Console.WriteLine(@"(╯°□°)╯︵ ┻━┻");
                         Environment.Exit(0);
                         break;
                     default:
