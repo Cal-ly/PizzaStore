@@ -1,7 +1,4 @@
-﻿using PizzaStore;
-using System.ComponentModel.DataAnnotations;
-
-namespace PizzaStore
+﻿namespace PizzaStore
 {
     public class PizzaMenu
     {

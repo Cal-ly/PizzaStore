@@ -1,15 +1,4 @@
-﻿using PizzaStore;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.AccessControl;
-using System.Text;
-using System.Threading.Channels;
-using System.Threading.Tasks;
-
-namespace PizzaStore
+﻿namespace PizzaStore
 {
     class Store
     {
@@ -197,8 +186,3 @@ namespace PizzaStore
         #endregion
     }
 }
-
-
-//Dictionary<int, Action> actionDict = new() { };
-
-//actionDict.Add(1, PizzaMenu.ShowMenu);
