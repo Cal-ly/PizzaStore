@@ -33,7 +33,7 @@ namespace PizzaStore
         }
         public Customer(string name, string address, string postalCode, string city, string phoneNumber, bool member)
         {
-            nextId++;
+            ++nextId;
             Id = nextId;
             Name = name;
             Address = address;

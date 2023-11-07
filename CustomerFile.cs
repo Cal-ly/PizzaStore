@@ -65,7 +65,7 @@ namespace PizzaStore
         public static void UpdateCustomer()
         {
             bool loopHasRun = false;
-            Console.WriteLine("Enter customer ID, for the customer you want to update");
+            Console.WriteLine("Enter customer ID:");
             int updateID = Store.ReadCustomerInt();
             foreach (Customer costumer in Customers)
             {
@@ -139,12 +139,14 @@ namespace PizzaStore
                     if (hasUpdated == false)
                     {
                         Console.WriteLine("No information has been updated");
+                        loopHasRun = true;
                     }
                     else if (hasUpdated == true)
                     {
                         Console.WriteLine($"Customer #{costumer.Id} {costumer.Name} has been updated.\n");
                         Console.WriteLine($"Updated information: {costumer}");
                         Console.WriteLine();
+                        loopHasRun = true;
                     }
                     break;
                 }

@@ -22,12 +22,11 @@ namespace PizzaStore
         #region Methods
         public static void ShowMenu()
         {
-            Console.WriteLine("Big Mamma a la Carte, Bon Appetit <3\n");
+            Console.Write("Big Mamma a la Carte, Bon Appetit <3\n");
             foreach (var item in Menu)
             {
-                Console.WriteLine($"#{item.Key} - {item.Value.Name} - {item.Value.Price:F2} kr");
+                Console.Write($"#{item.Key} - {item.Value.Name} - {item.Value.Price:F2} kr\n");
             }
-            Console.WriteLine();
         }
         public static void AddMenuItem() //Can both add and overwrite a Menu item
         {
