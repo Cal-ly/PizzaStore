@@ -186,25 +186,6 @@ namespace PizzaStore
                         Console.WriteLine("\nPress any key to flip the table\n");
                         Console.ReadKey();
                         Console.WriteLine(tableFlip); // ┻━┻ ︵╰(°□°╰)
-                        Console.WriteLine("e294bbe29481e294bb20efb8b5e295b028c2b0e296a1c2b0e295b029");
-                        Console.WriteLine();
-                        string binaryString = "11100010 10010100 10111011 11100010 10010100 10000001 11100010 10010100 10111011 100000 11101111 10111000 10110101 11100010 10010101 10110000 101000 11000010 10110000 11100010 10010110 10100001 11000010 10110000 11100010 10010101 10110000 101001";
-                        string[] binaryArray = binaryString.Split(' ');
-
-                        foreach (string binary in binaryArray)
-                        {
-                            byte decimalValue = Convert.ToByte(binary, 2);
-                            char character = (char)decimalValue;
-                            Console.Write(character);
-                        }
-                        Console.WriteLine();
-                        int[] asciiValues = { 226, 173, 226, 226, 32, 239, 184, 40, 194, 150, 194, 184, 41 };
-
-                        foreach (int asciiValue in asciiValues)
-                        {
-                            char character = (char)asciiValue;
-                            Console.Write(character);
-                        }
                         Environment.Exit(0);
                         break;
                     default:
