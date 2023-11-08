@@ -159,7 +159,7 @@
                         break;
                     case 5: // Create order
                         Console.Clear();
-                        OrderHandler.CreatOrder();
+                        OrderHandler.CreateOrder();
                         ShowStore();
                         break;
                     case 6: // Show order log

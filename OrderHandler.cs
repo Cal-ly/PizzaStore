@@ -1,6 +1,6 @@
 ﻿namespace PizzaStore
 {
-    class OrderHandler
+    static class OrderHandler
     {
         public static string LogEntry { get; private set; } = "";
         public static double LogRevenue { get; private set; } = 0;
@@ -29,7 +29,7 @@
             Pizza logPizza = new(999, LogEntry, LogRevenue);
             LogList.Add(logPizza);
         }
-        public static void CreatOrder()
+        public static void CreateOrder()
         {
             Customer customer = CustomerFile.FindCustomer(Store.ReadCustomerInt());
             Pizza customerPizza = AddCustomerInfoPizza(customer);
