@@ -1,6 +1,6 @@
 ﻿namespace PizzaStore
 {
-    class PizzaOrder
+    public class PizzaOrder
     {
         private static int nextOrderId = 1;
         public string OrderName { get; }

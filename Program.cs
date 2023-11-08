@@ -1,13 +1,14 @@
-﻿using PizzaStore;
-
-static class Program
+﻿namespace PizzaStore
 {
-    private static void Main()
+    public static class Program
     {
-        Console.OutputEncoding = System.Text.Encoding.Default;
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.Title = "Pizza Store";
-        Console.Beep();
-        Store.RunStore();
+        public static void Main()
+        {
+            Console.OutputEncoding = System.Text.Encoding.Default;
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Title = "Pizza Store";
+            Console.Beep();
+            Store.RunStore();
+        }
     }
 }

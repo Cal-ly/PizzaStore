@@ -144,7 +144,7 @@
                 if (!hasBeenFound)
                 {
                     Console.WriteLine("No results found");
-                    Store.PressKeyToCont();
+                    Store.PressKeyToContinue();
                 }
             }
         }

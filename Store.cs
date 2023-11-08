@@ -1,6 +1,6 @@
 ﻿namespace PizzaStore
 {
-    static class Store
+    public static class Store
     {
         // Compiler will automatically construct a default constructor if none is defined
         #region Method
@@ -23,7 +23,7 @@
             int customerId = int.Parse(customerStringID);
             return customerId;
         }
-        public static void PressKeyToCont()
+        public static void PressKeyToContinue()
         {
             Console.WriteLine("Press any key to continue");
             Console.ReadKey();

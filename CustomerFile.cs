@@ -1,6 +1,6 @@
 ﻿namespace PizzaStore
 {
-    public class CustomerFile
+    public static class CustomerFile
     {
         public static List<Customer> Customers { get; set; } = new() { };
 
@@ -162,7 +162,6 @@
             }
             if (loopRun == false) { Console.WriteLine("Invalid ID, please try again"); }
         }
-
         public static Customer FindCustomer(int customerId)
         {
             if (Customers.Any(c => c.Id == customerId) == false) // Check if customer ID exists

@@ -6,6 +6,12 @@
         public string Name { get; set; }
         public double Price { get; set; }
 
+        public Pizza()
+        {
+            Number = 0;
+            Name = "DefaultPizza";
+            Price = 0;
+        }
         public Pizza(int number, string name, double price)
         {
             if (number < 0 || !int.TryParse(number.ToString(), out int result))
@@ -25,12 +31,6 @@
                 throw new ArgumentException("Invalid input. Price must be a positive number.");
             }
             Price = price;
-        }
-        public Pizza()
-        {
-            Number = 0;
-            Name = "DefaultPizza";
-            Price = 0;
         }
         public override string ToString()
         {

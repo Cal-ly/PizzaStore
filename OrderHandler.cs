@@ -1,6 +1,6 @@
 ﻿namespace PizzaStore
 {
-    static class OrderHandler
+    public static class OrderHandler
     {
         public static string LogEntry { get; private set; } = "";
         public static double LogRevenue { get; private set; } = 0;
