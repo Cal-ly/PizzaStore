@@ -36,7 +36,6 @@
             PhoneNumber = phoneNumber;
             Member = member;
         }
-
         public override string ToString()
         {
             return $"{nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(Address)}: {Address}, {nameof(PostalCode)}: {PostalCode}, {nameof(City)}: {City}, {nameof(PhoneNumber)}: {PhoneNumber}, Member: {MemberDisplay}";

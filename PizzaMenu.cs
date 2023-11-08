@@ -1,6 +1,6 @@
 ﻿namespace PizzaStore
 {
-    public class PizzaMenu
+    public static class PizzaMenu
     {
         public static Dictionary<int, Pizza> Menu { get; } = new()
         {

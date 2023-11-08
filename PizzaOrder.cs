@@ -6,7 +6,6 @@
         public string OrderName { get; }
         public double TotalPrice { get; private set; }
         public List<Pizza> OrderList { get; set; } = new() { };
-
         public PizzaOrder()
         {
             OrderName = "Order #" + $"{nextOrderId}"; //Every order has now a unique ID

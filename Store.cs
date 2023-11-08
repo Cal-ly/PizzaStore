@@ -1,9 +1,8 @@
 ﻿namespace PizzaStore
 {
-    class Store
+    static class Store
     {
         // Compiler will automatically construct a default constructor if none is defined
-
         #region Method
         public static int ReadUserInt()
         {
