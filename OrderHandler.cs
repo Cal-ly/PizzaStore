@@ -7,7 +7,7 @@
         public static List<Pizza> LogList { get; set; } = new() { };
 
         static OrderHandler()
-        {   
+        {
             LogEntry = $"Log started at {GenerateTimeStamp()}" ?? "";
             Pizza timePizza = new(999, $"Log started at {GenerateTimeStamp()}", 0);
             LogList.Add(timePizza);
@@ -20,7 +20,7 @@
             string TimeStamp = timeNow.ToString("dd-MM-yyyy HH:mm:ss");
             return TimeStamp;
         }
-        public static void AddLog (PizzaOrder pizzaOrder)
+        public static void AddLog(PizzaOrder pizzaOrder)
         {
             string TimeStamp = GenerateTimeStamp();
             LogRevenue += pizzaOrder.TotalPrice;
@@ -40,7 +40,7 @@
             Console.WriteLine("Your order details:");
             pizzaOrder.ShowOrder();
             Console.WriteLine($"Total Price: {pizzaOrder.TotalPrice:F2} kr\n");
-            pizzaOrder.OrderList.Add(customerPizza); 
+            pizzaOrder.OrderList.Add(customerPizza);
             AddLog(pizzaOrder); // Order now include a line with customer info
             // return pizzaOrder; Return the order will be used further for at later stage
         }

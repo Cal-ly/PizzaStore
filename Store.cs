@@ -8,10 +8,10 @@
         public static int ReadUserInt()
         {
             string input = Console.ReadLine() ?? string.Empty;
-            int output = int.TryParse(input, out int result)    ?   result  :   -1; // Shorter than If-else statement
+            int output = int.TryParse(input, out int result) ? result : -1; // Shorter than If-else statement
             return output;
         }
-        public static string ReadYesNo() 
+        public static string ReadYesNo()
         {
             string userConsole = Console.ReadLine() ?? string.Empty;
             userConsole = userConsole.ToLower();
@@ -24,7 +24,7 @@
             int customerId = int.Parse(customerStringID);
             return customerId;
         }
-        public static void PressKeyToCont() 
+        public static void PressKeyToCont()
         {
             Console.WriteLine("Press any key to continue");
             Console.ReadKey();
@@ -36,7 +36,7 @@
             Console.WriteLine("\t2. Search menu");
             Console.WriteLine("\t3. Add or update menu item");
             Console.WriteLine("\t0. Back to main menu");
-            Console.WriteLine();            
+            Console.WriteLine();
         }
         public static void RunMenuOptions()
         {
@@ -48,6 +48,7 @@
                     case 1:
                         Console.Clear();
                         PizzaMenu.ShowMenu();
+                        Console.WriteLine();
                         ShowMenuOptions();
                         break;
                     case 2:
@@ -141,6 +142,7 @@
                     case 1: // Show menu
                         Console.Clear();
                         PizzaMenu.ShowMenu();
+                        Console.WriteLine();
                         ShowStore();
                         break;
                     case 2: // Other menu options

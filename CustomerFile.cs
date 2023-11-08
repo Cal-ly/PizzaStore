@@ -30,12 +30,12 @@
             else if (member == "n") { memberBool = false; }
             else { Console.WriteLine("Invalid input, try again"); }
 
-            if (string.IsNullOrEmpty(name) || 
-                string.IsNullOrEmpty(address) || 
-                string.IsNullOrEmpty(postalCode) || 
+            if (string.IsNullOrEmpty(name) ||
+                string.IsNullOrEmpty(address) ||
+                string.IsNullOrEmpty(postalCode) ||
                 string.IsNullOrEmpty(city) ||
                 string.IsNullOrEmpty(phoneNumber) ||
-                string.IsNullOrEmpty(member) )
+                string.IsNullOrEmpty(member))
             {
                 Console.WriteLine("Some fields have been left empty\nYou can update the customer again, if needed");
             }
@@ -106,7 +106,7 @@
                         hasUpdated = true;
                     }
                     Console.WriteLine("Update membership? (y/n)");
-                    if(Console.ReadLine() == "y")
+                    if (Console.ReadLine() == "y")
                     {
                         Console.WriteLine("Is customer member of PizzaPals? (y/n)");
                         string member = Console.ReadLine() ?? string.Empty;

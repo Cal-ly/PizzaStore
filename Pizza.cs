@@ -8,8 +8,22 @@
 
         public Pizza(int number, string name, double price)
         {
+            if (number < 0 || !int.TryParse(number.ToString(), out int result))
+            {
+                throw new ArgumentException("Invalid input. Number must be a positive integer.");
+            }
             Number = number;
+
+            if (name.Length > 40)
+            {
+                throw new ArgumentException("Invalid input. Name must be less than or equal to 40 characters.");
+            }
             Name = name;
+
+            if (price < 0)
+            {
+                throw new ArgumentException("Invalid input. Price must be a positive number.");
+            }
             Price = price;
         }
         public Pizza()

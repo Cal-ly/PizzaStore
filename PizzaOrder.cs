@@ -37,16 +37,16 @@
                     Console.WriteLine("Choose a pizza from the menu (enter a number):");
                     string userChoiceString = Store.ReadYesNo();
                     int userChoice = int.Parse(userChoiceString);
-                    
+
                     if (PizzaMenu.Menu.ContainsKey(userChoice))
                     {
-                        Pizza tempPizza = new()  
+                        Pizza tempPizza = new()
                         {
                             Number = PizzaMenu.Menu[userChoice].Number,
                             Name = PizzaMenu.Menu[userChoice].Name,
                             Price = PizzaMenu.Menu[userChoice].Price
                         }; // Create a placeholder Pizza object and fills it with the chosen pizza from the menu
-                        
+
                         Console.WriteLine("Do you want to add toppings to this pizza? (y/n)");
                         string addToppingsChoice = Store.ReadYesNo();
                         addToppingsChoice?.ToLower();
