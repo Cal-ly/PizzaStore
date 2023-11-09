@@ -12,25 +12,26 @@
             Name = "DefaultPizza";
             Price = 0;
         }
-        public Pizza(int number, string name, double price)
+
+        public Pizza(int NumberInput, string NameInput, double PriceInput)
         {
-            if (number < 0 || !int.TryParse(number.ToString(), out int result))
+            if (NumberInput < 0)
             {
-                throw new ArgumentException("Invalid input. Number must be a positive integer.");
+                throw new ArgumentException("Number must be a positive integer.");
             }
-            Number = number;
+            Number = NumberInput;
 
-            if (name.Length > 40)
+            if (string.IsNullOrEmpty(NameInput))
             {
-                throw new ArgumentException("Invalid input. Name must be less than or equal to 40 characters.");
+                throw new ArgumentException("Name cannot be null or empty.");
             }
-            Name = name;
+            Name = NameInput;
 
-            if (price < 0)
+            if (PriceInput < 0)
             {
-                throw new ArgumentException("Invalid input. Price must be a positive number.");
+                throw new ArgumentException("Price cannot be negative.");
             }
-            Price = price;
+            Price = PriceInput;
         }
         public override string ToString()
         {
