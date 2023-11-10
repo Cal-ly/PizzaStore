@@ -1,86 +1,59 @@
 ﻿namespace PizzaStore
 {
-    class PizzaOrder
+    public class PizzaOrder
     {
-        #region Instance Fields
-        private static int _nextOrderId = 1;
-        private string _orderName;
-        private double _totalPrice;
-        private List<Pizza> _orderList = new List<Pizza>() { };
-        #endregion
-
-        #region Constructor
+        private static int nextOrderId = 1;
+        public string OrderName { get; }
+        public double TotalPrice { get; private set; }
+        public List<Pizza> OrderList { get; set; } = new() { };
         public PizzaOrder()
         {
-            _orderName = "Order #" + $"{_nextOrderId}"; //Every order has now a unique ID
+            OrderName = "Order #" + $"{nextOrderId}"; //Every order has now a unique ID
+            nextOrderId++;
         }
-        #endregion
-
-        #region Properties
-        public List<Pizza> OrderList
-        {
-            get { return _orderList; }
-        }
-
-        public string OrderName
-        {
-            get { return _orderName; }
-        }
-
-        public double TotalPrice
-        {
-            get { return _totalPrice; }
-        }
-        #endregion
 
         #region Method
-        public static int GenerateOrderId()
-        {
-            _nextOrderId++;
-            return _nextOrderId;
-        }
         public void ShowOrder()
         {
-            Console.WriteLine($"Order Name: {_orderName}");
-            for (int i = 0; i < _orderList.Count; i++)
+            Console.WriteLine($"This is: {OrderName}");
+            for (int i = 0; i < OrderList.Count; i++)
             {
-                Pizza? item = _orderList[i];
+                Pizza? item = OrderList[i];
                 Console.WriteLine($"#{item.Number}, {item.Name}, {item.Price:F2} kr");
             }
+            Console.WriteLine();
         }
-
-        public void AddPizza2Order()
+        public void AddPizzaToOrder()
         {
-            // Create a PizzaMenu to choose from
-            PizzaMenu menu = new PizzaMenu();
-            do
+            while (true) // Start of order
             {
+                Console.Clear();
                 Console.WriteLine("Do you want to add a pizza to the order? (y/n)");
-                string userConsole = Console.ReadLine() ?? string.Empty;
-                userConsole.ToLower();
+                string userConsole = Store.ReadYesNo();
+                userConsole?.ToLower();
                 if (userConsole == "y")
                 {
                     Console.WriteLine("Choose a pizza from the menu (enter a number):");
-                    string userChoiceString = Console.ReadLine() ?? string.Empty;
+                    string userChoiceString = Store.ReadYesNo();
                     int userChoice = int.Parse(userChoiceString);
-                    Pizza tempPizza = new Pizza(0, "New Order", 1); // Create a placeholder Pizza object
-                    if (userChoice >= 1 && userChoice <= menu.MenuList.Count)
+
+                    if (PizzaMenu.Menu.ContainsKey(userChoice))
                     {
-                        int subs = 1;
-                        int index = userChoice - subs; // Adjust for zero-based index
-                        tempPizza.Number = menu.MenuList[index].Number;
-                        tempPizza.Name = menu.MenuList[index].Name;
-                        tempPizza.Price = menu.MenuList[index].Price;
-                        // Sends the "menu values" to placeholder object
+                        Pizza tempPizza = new()
+                        {
+                            Number = PizzaMenu.Menu[userChoice].Number,
+                            Name = PizzaMenu.Menu[userChoice].Name,
+                            Price = PizzaMenu.Menu[userChoice].Price
+                        }; // Create a placeholder Pizza object and fills it with the chosen pizza from the menu
 
-                        // Ask the user if they want to add toppings
-                        Console.WriteLine("Do you want to add toppings to this pizza? (1 for Yes, 2 for No)");
-                        bool v1 = int.TryParse(Console.ReadLine(), out int addToppingsChoice);
+                        Console.WriteLine("Do you want to add toppings to this pizza? (y/n)");
+                        string addToppingsChoice = Store.ReadYesNo();
+                        addToppingsChoice?.ToLower();
 
-                        if (v1 == true && addToppingsChoice == 1)
+                        if (addToppingsChoice == "y")
                         {
                             bool loopCondition = true;
-                            do
+                            while (loopCondition)
                             {
                                 Console.WriteLine("Choose a topping to add:");
                                 Console.WriteLine("1. Mushrooms (+10.00 kr)");
@@ -111,10 +84,18 @@
                                 {
                                     Console.WriteLine("Invalid input. Please choose a valid option.");
                                 }
-                            } while (loopCondition);
+                            }
                         }
-                        _orderList.Add(tempPizza); // Add the pizza to the order
-                        _totalPrice += tempPizza.Price; // Add total single pizzacost to totalPrice
+                        else if (addToppingsChoice == "n")
+                        {
+                            Console.WriteLine("No extra topping wanted");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid input. Please choose a valid option.");
+                        }
+                        OrderList.Add(tempPizza); // Add the pizza to the order
+                        TotalPrice += tempPizza.Price; // Add total single pizzacost to totalPrice
                     }
                     else
                     {
@@ -123,15 +104,13 @@
                 }
                 else if (userConsole == "n")
                 {
-                    GenerateOrderId();
                     break;
                 }
                 else
                 {
                     Console.WriteLine("Invalid input. Please choose a valid option.");
                 }
-
-            } while (true); // End of order
+            }
         }
         #endregion
     }

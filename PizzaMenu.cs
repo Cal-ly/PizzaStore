@@ -1,126 +1,150 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace PizzaStore
+﻿namespace PizzaStore
 {
-    class PizzaMenu
+    public static class PizzaMenu
     {
-        #region Instance Field
-        Pizza pizza1 = new Pizza(1, "Margherita", 101.00);
-        Pizza pizza2 = new Pizza(2, "Vesuvio", 102.00);
-        Pizza pizza3 = new Pizza(3, "Capricciosa", 103.00);
-        Pizza pizza4 = new Pizza(4, "Calzone", 104.00);
-        public List<Pizza> _menuList = new List<Pizza>() { };
-
-        #endregion
-
-        #region Constrctor 
-        public PizzaMenu()
+        public static Dictionary<int, Pizza> Menu { get; } = new()
         {
-            _menuList.Add(pizza1);
-            _menuList.Add(pizza2);
-            _menuList.Add(pizza3);
-            _menuList.Add(pizza4);
-            // Initialize the MenuList property in the constructor -> can be further hardcoded, if not amended while program runs
-        }
-        #endregion
+            { 1, new Pizza(1, "Margherita", 101.00) },
+            { 2, new Pizza(2, "Vesuvio", 102.00) },
+            { 3, new Pizza(3, "Capricciosa", 103.00) },
+            { 4, new Pizza(4, "Calzone", 104.00) },
+            { 5, new Pizza(5, "Hawaii", 105.00) },
+            { 6, new Pizza(6, "Quattro Stagioni", 106.00) }
+        };
 
-        #region Properties
-        public List<Pizza> MenuList
+        static PizzaMenu()
         {
-            get { return _menuList; }
         }
-        #endregion
 
         #region Methods
-        public void ShowMenu()
+        public static void ShowMenu()
         {
-            for (int i = 0; i < _menuList.Count; i++)
+            Console.Write("Big Mamma a la Carte, Bon Appetit <3\n");
+            foreach (var item in Menu)
             {
-                Pizza item = _menuList[i];
-                Console.WriteLine($"#{item.Number} - {item.Name} - {item.Price:F2} kr");
+                Console.Write($"#{item.Key} - {item.Value.Name} - {item.Value.Price:F2} kr\n");
             }
-            Console.WriteLine();
         }
-        public void AddMenuItem()
+        public static void AddMenuItem() //Can both add and overwrite a Menu item
         {
-            Console.WriteLine("Type a list number for the new pizza:\nBe aware that any existing items with that list number will be overwritten");
+            Console.WriteLine("Type a list number for the new pizza:");
             if (int.TryParse(Console.ReadLine(), out int entryNum))
             {
-                Console.WriteLine("Type name for the new pizza:");
-                string entryName = Console.ReadLine() ?? string.Empty; // null-coalescing operator, if !null, then left side gets returned, otherwise reverse, in this case, an empty string
-                Console.WriteLine("Type price for the new pizza:");
-                if (double.TryParse(Console.ReadLine(), out double entryPrice) && entryPrice >= 0)
+                if (Menu.ContainsKey(entryNum))
                 {
-                    entryPrice = Math.Round(entryPrice, 2); // Round the price and update entryPrice
-
-                    // Update or add the new entry to the menu list
-                    bool entryExists = false;
-                    for (int i = 0; i < _menuList.Count; i++)
+                    Console.WriteLine("The entry exists and will be overwritten (y/n)");
+                    string overWrite = Store.ReadYesNo();
+                    Console.WriteLine();
+                    if (string.IsNullOrEmpty(overWrite))
                     {
-                        if (_menuList[i].Number == entryNum)
+                        Console.WriteLine("Invalid entry, try again");
+                    }
+                    else if (overWrite == "y")
+                    {
+                        Console.WriteLine("Type name for the new pizza:");
+                        string entryName = Store.ReadYesNo();
+                        Console.WriteLine();
+                        if (string.IsNullOrEmpty(entryName))
                         {
-                            Console.WriteLine("The entry exists and will be overwritten");
-                            Console.WriteLine("Press 1 to continue, Press 2 to cancel");
-                            bool v = int.TryParse(Console.ReadLine(), out int overWrite);
-                            if (v == true && overWrite == 1)
+                            Console.WriteLine("Invalid entry, try again");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Type price for the new pizza:");
+                            if (double.TryParse(Console.ReadLine(), out double entryPrice))
                             {
-                                _menuList.Insert(i, new Pizza(entryNum, entryName, entryPrice));
-                                entryExists = true;
-                                break;
-                            }
-                            else if (v == true && overWrite != 1)
-                            {
-                                Console.WriteLine("New menu entry has been canceled");
-                                break;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Invalid entry, try again");
+                                Console.WriteLine();
+                                if (entryPrice < 0)
+                                {
+                                    Console.WriteLine("Invalid price input. Please enter a valid positive number.");
+                                }
+                                else
+                                {
+                                    Menu.Remove(entryNum);
+                                    Menu.Add(entryNum, new Pizza(entryNum, entryName, entryPrice));
+                                    Console.WriteLine("Menu item updated successfully.");
+                                    Console.WriteLine();
+                                }
                             }
                         }
                     }
-
-                    if (!entryExists)
+                    else
                     {
-                        _menuList.Add(new Pizza(entryNum, entryName, entryPrice));
+                        Console.WriteLine("New menu entry has been canceled");
                     }
-
-                    Console.WriteLine("New menu item added successfully.");
                 }
                 else
                 {
-                    Console.WriteLine("Invalid price input. Please enter a valid positive number.");
+                    Console.WriteLine("Type name for the new pizza:");
+                    string entryName = Console.ReadLine() ?? string.Empty;
+                    Console.WriteLine();
+                    if (!string.IsNullOrEmpty(entryName))
+                    {
+                        Console.WriteLine("Type price for the new pizza:");
+                        if (double.TryParse(Console.ReadLine(), out double entryPrice))
+                        {
+                            Console.WriteLine();
+                            if (entryPrice < 0)
+                            {
+                                Console.WriteLine("Invalid price input. Please enter a valid positive number.");
+                            }
+                            else
+                            {
+                                entryPrice = Math.Round(entryPrice, 2);
+                                Menu.Add(entryNum, new Pizza(entryNum, entryName, entryPrice));
+                                Console.WriteLine("New menu item added successfully.");
+                                Console.WriteLine();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid entry, try again");
+                    }
                 }
             }
             else
             {
-                Console.WriteLine("Invalid list number input. Please enter a valid integer.");
+                Console.WriteLine("Invalid price input. Please enter a valid positive number.");
             }
         }
-        public void SearchMenu()
+        public static void DeleteMenuItem(int deleteNumber)
         {
-            Console.WriteLine("Enter search query: ");
-            string userInput = Console.ReadLine() ?? string.Empty;
+            if (Menu.ContainsKey(deleteNumber))
+            {
+                Console.WriteLine($"Pizza Number #{Menu[deleteNumber]} will be removed");
+                Menu.Remove(deleteNumber);
+            }
+            else Console.WriteLine($"The Menu does not contain a pizza with {deleteNumber}");
+        }
+        public static void SearchMenu()
+        {
+            Console.WriteLine("Search by number, name or price. Enter search query: ");
+            string userInput = Store.ReadYesNo();
+            Console.WriteLine();
             if (string.IsNullOrEmpty(userInput))
             {
                 Console.WriteLine("Invalid user input, try again");
             }
             else
             {
-                userInput.ToLower();
-                foreach (Pizza item in _menuList)
+                bool hasBeenFound = false;
+                foreach (var item in Menu)
                 {
-                    string tempString1 = item.Number.ToString();
-                    string tempstring2 = item.Name.ToLower();
-                    string tempString3 = item.Price.ToString();
-                    if (userInput == tempString1 || userInput == tempstring2 || userInput == tempString3)
+                    string tempString1 = item.Key.ToString();
+                    string tempString2 = item.Value.Name.ToLower();
+                    string tempString3 = item.Value.Price.ToString();
+                    if (userInput == tempString1 || userInput == tempString2 || userInput == tempString3)
                     {
-                        Console.WriteLine($"#{item.Number}, Name: {item.Name}, Price: {item.Price}");
+                        Console.WriteLine($"#{item.Key}, Name: {item.Value.Name}, Price: {item.Value.Price}");
+                        Console.WriteLine();
+                        hasBeenFound = true;
                     }
-                    else
-                    {
-                        Console.WriteLine($"{userInput} has not been found in the menu");
-                    }
+                }
+                if (!hasBeenFound)
+                {
+                    Console.WriteLine("No results found");
+                    Store.PressKeyToContinue();
                 }
             }
         }

@@ -1,81 +1,41 @@
 ﻿namespace PizzaStore
 {
-    class Pizza
+    public class Pizza
     {
-        #region Instance Field
-        private int _number;
-        private string _name;
-        private double _price;
-        #endregion
+        public int Number { get; set; }
+        public string Name { get; set; }
+        public double Price { get; set; }
 
-        #region Constructor
-        public Pizza(int Number, string Name, double Price)
+        public Pizza()
         {
-            if (Number < 0)
+            Number = 0;
+            Name = "DefaultPizza";
+            Price = 0;
+        }
+
+        public Pizza(int NumberInput, string NameInput, double PriceInput)
+        {
+            if (NumberInput < 0)
             {
                 throw new ArgumentException("Number must be a positive integer.");
             }
+            Number = NumberInput;
 
-            if (string.IsNullOrEmpty(Name))
+            if (string.IsNullOrEmpty(NameInput))
             {
                 throw new ArgumentException("Name cannot be null or empty.");
             }
+            Name = NameInput;
 
-            if (Price < 0)
+            if (PriceInput < 0)
             {
                 throw new ArgumentException("Price cannot be negative.");
             }
-
-            _number = Number;
-            _name = Name;
-            _price = Price;
+            Price = PriceInput;
         }
-        #endregion
-
-        #region Properties
-
-        public int Number
+        public override string ToString()
         {
-            get { return _number; }
-            set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentException("Number must be a positive integer.");
-                }
-                _number = value;
-            }
+            return $"{{{nameof(Number)}={Number}, {nameof(Name)}={Name}, {nameof(Price)}={Price}}}";
         }
-
-        public string Name
-        {
-            get { return _name; }
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new ArgumentException("Name cannot be null or empty.");
-                }
-                _name = value;
-            }
-        }
-
-        public double Price
-        {
-            get { return _price; }
-            set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentException("Price cannot be negative.");
-                }
-                _price = value;
-            }
-        }
-        #endregion
-
-        #region Methods
-        //No Methods
-        #endregion
     }
 }

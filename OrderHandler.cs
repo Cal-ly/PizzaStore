@@ -1,70 +1,69 @@
 ﻿namespace PizzaStore
 {
-    class OrderHandler
+    public static class OrderHandler
     {
-        #region Instance Field
-        private string _timeStamp = "";
-        private string _logEntry;
-        private double _logRevenue = 0;
-        private List<Pizza> _logList = new List<Pizza>() { };
-        #endregion
+        public static string LogEntry { get; private set; } = "";
+        public static double LogRevenue { get; private set; } = 0;
+        public static List<Pizza> LogList { get; set; } = new() { };
 
-        #region Constructor
-        public OrderHandler()
-        {   
-            _logEntry = $"Log started at {GenerateTimeStamp()}" ?? "";
-            Pizza timePizza = new Pizza(999, $"Log started at {GenerateTimeStamp()}", 0);
-            _logList.Add(timePizza);
-        }
-        #endregion
-
-        #region Properties
-        public List<Pizza> LogList
+        static OrderHandler()
         {
-            get { return _logList; }
+            LogEntry = $"Log started at {GenerateTimeStamp()}" ?? "";
+            Pizza timePizza = new(999, $"Log started at {GenerateTimeStamp()}", 0);
+            LogList.Add(timePizza);
         }
-        public string LogEntry
-        {
-            get { return _logEntry; }
-        }
-        public double LogRevenue
-        {
-            get { return _logRevenue; }
-        }
-        public string TimeStamp
-        {
-            get { return _timeStamp; }
-        }
-        #endregion
 
         #region Method
-        public string GenerateTimeStamp()
+        public static string GenerateTimeStamp()
         {
             DateTime timeNow = DateTime.Now;
-            _timeStamp = timeNow.ToString("dd-MM-yyyy HH:mm:ss");
-            return _timeStamp;
+            string TimeStamp = timeNow.ToString("dd-MM-yyyy HH:mm:ss");
+            return TimeStamp;
         }
-        public void CreatOrder()
+        public static void AddLog(PizzaOrder pizzaOrder)
         {
+            string TimeStamp = GenerateTimeStamp();
+            LogRevenue += pizzaOrder.TotalPrice;
+            LogEntry = $"{pizzaOrder.OrderName} {TimeStamp}";
+            LogList.AddRange(pizzaOrder.OrderList);
+            Pizza logPizza = new(999, LogEntry, LogRevenue);
+            LogList.Add(logPizza);
+        }
+        public static void CreateOrder()
+        {
+            Customer customer = CustomerFile.FindCustomer(Store.ReadCustomerInt());
+            Pizza customerPizza = AddCustomerInfoPizza(customer);
             Console.WriteLine("Creating a new order...");
-            PizzaOrder pizzaOrder = new PizzaOrder();
-            pizzaOrder.AddPizza2Order();
+            PizzaOrder pizzaOrder = new();
+            pizzaOrder.AddPizzaToOrder();
             Console.WriteLine($"Order {pizzaOrder.OrderName} has been placed.\n");
             Console.WriteLine("Your order details:");
             pizzaOrder.ShowOrder();
             Console.WriteLine($"Total Price: {pizzaOrder.TotalPrice:F2} kr\n");
-            _logRevenue += pizzaOrder.TotalPrice;
-            GenerateTimeStamp();
-            _logEntry = $"{pizzaOrder.OrderName} {_timeStamp}";
-            _logList.AddRange(pizzaOrder.OrderList);
-            Pizza logPizza = new Pizza(999, _logEntry, _logRevenue);
-            _logList.Add(logPizza);
+            pizzaOrder.OrderList.Add(customerPizza);
+            AddLog(pizzaOrder); // Order now include a line with customer info
+            // return pizzaOrder; Return the order will be used further for at later stage
         }
-        public void ShowLog()
+        public static Pizza AddCustomerInfoPizza(Customer InputCustomer)
         {
-            for (int i = 0; i < _logList.Count; i++)
+            Customer customer = InputCustomer;
+            string memberStatus = "Member: ";
+            if (customer.Member) { memberStatus += "Yes"; }
+            else { memberStatus += "No"; }
+            string customerInfo = $"{customer.Name}, {customer.Address}, {customer.PostalCode}-{customer.City}, {customer.PhoneNumber}, {memberStatus}";
+            Pizza customerPizza = new(customer.Id, customerInfo, 0);
+            return customerPizza;
+
+            // Alternative way to work around customer ID exists, automatic default customer
+            // string customerIdString = Console.ReadLine() ?? "1000"; // Default customer ID is 1000
+            // int customerId = int.Parse(customerIdString);
+        }
+        public static void ShowLog()
+        {
+            Console.WriteLine("Log:");
+            for (int i = 0; i < LogList.Count; i++)
             {
-                Pizza? item = _logList[i];
+                Pizza? item = LogList[i];
                 Console.WriteLine($"#{item.Number} - {item.Name} - {item.Price:F2} kr");
             }
             Console.WriteLine();
@@ -72,4 +71,3 @@
         #endregion
     }
 }
-
