@@ -132,9 +132,9 @@
                 foreach (var item in Menu)
                 {
                     string tempString1 = item.Key.ToString();
-                    string tempstring2 = item.Value.Name.ToLower();
+                    string tempString2 = item.Value.Name.ToLower();
                     string tempString3 = item.Value.Price.ToString();
-                    if (userInput == tempString1 || userInput == tempstring2 || userInput == tempString3)
+                    if (userInput == tempString1 || userInput == tempString2 || userInput == tempString3)
                     {
                         Console.WriteLine($"#{item.Key}, Name: {item.Value.Name}, Price: {item.Value.Price}");
                         Console.WriteLine();
